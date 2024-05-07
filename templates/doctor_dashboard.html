@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        header {
+            background-color: #1e6bb8;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e6bb8;
+            text-align: center;
+        }
+        .patient-details {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .patient-details:hover {
+            background-color: #f0f0f0;
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            background-color: #1e6bb8;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Doctor Dashboard</h1>
+    </header>
+    <div class="container">
+        <h1>Patient Information</h1>
+        {% for patient_data in patient_data_list %}
+        <div class="patient-details" onclick="toggleDetails(this)">
+            <h2>Patient ID: {{ patient_data.get('patient_id', 'N/A') }}</h2>
+            <div class="hidden">
+                <p><strong>Disease Name:</strong> {{ patient_data.get('disease_name', 'N/A') }}</p>
+                <p><strong>Test Results:</strong></p>
+                <ul>
+                    {% for test, result in patient_data.get('test_results', {}).items() %}
+                        <li>{{ test }}: {{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <footer>
+        &copy; 2024 Doctor Dashboard. All rights reserved.
+    </footer>
+
+    <script>
+        function toggleDetails(element) {
+            var details = element.querySelector('.hidden');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
